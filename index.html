@@ -41,6 +41,8 @@ h2{font-size:clamp(28px,4vw,42px)}
 
 /* плашка тестовой версии */
 .demo{background:var(--soft);font-size:14px;text-align:center;padding:8px 20px;color:var(--mute)}
+/* на телефоне — одна строка, чтобы первый экран достался заголовку и кнопке записи */
+@media(max-width:600px){.demo{font-size:12.5px;padding:6px 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.demo-x{display:none}}
 
 /* шапка */
 header{position:sticky;top:0;z-index:40;background:var(--bg)}
@@ -67,7 +69,8 @@ main section,main .board{margin-bottom:84px}
 .hero .pic{overflow:hidden;background:var(--soft);border-radius:var(--rl)}
 .hero.v-split{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
 .hero.v-split .pic{aspect-ratio:4/3.4}
-@media(max-width:820px){.hero.v-split{grid-template-columns:1fr;padding-top:12px;gap:24px}.hero.v-split .pic{order:-1;aspect-ratio:16/11}}
+/* на телефоне сначала заголовок и кнопка записи, фото под ними */
+@media(max-width:820px){.hero.v-split{grid-template-columns:1fr;padding-top:12px;gap:24px}.hero.v-split .pic{aspect-ratio:16/11}}
 .hero.v-full{position:relative;display:grid;align-items:end;min-height:min(78vh,640px);padding:0;border-radius:var(--rl);overflow:hidden;color:var(--on-dark);margin-top:8px}
 .hero.v-full{margin-bottom:56px}
 .hero.v-full .pic{position:absolute;inset:0;border-radius:0}
@@ -119,7 +122,8 @@ main section,main .board{margin-bottom:84px}
   .tabs{width:100%}
   .tabs button{flex:1 1 0;min-width:0;padding:8px 2px;font-size:13px;letter-spacing:0}
   .hours{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;cursor:auto;padding-bottom:0}
-  .hours > .hour{min-width:0;max-width:none;margin:0;font-size:15px;letter-spacing:0;padding:13px 0}
+  /* :first-child/:last-child — иначе margin:auto от широкой ленты сжимает первый и последний час в кружок (17.11.2026) */
+  .hours > .hour,.hours > .hour:first-child,.hours > .hour:last-child{min-width:0;max-width:none;margin:0;font-size:15px;letter-spacing:0;padding:13px 0}
   .hours > p,.hours > .wait:only-child{grid-column:1/-1}
   [data-bstyle="bar"] .hours{overflow:hidden}
   [data-bstyle="bar"] .hour{border-bottom:var(--bw) solid var(--line)}
@@ -186,7 +190,30 @@ main section,main .board{margin-bottom:84px}
 @media(max-width:700px){.strip,.strip.three{grid-template-columns:1fr;grid-template-rows:none}.strip figure{aspect-ratio:16/10}}
 
 /* контакты */
+.hero .pic.art{display:grid;place-items:center;background:var(--soft)}
+.hero .pic.art svg{width:100%;height:100%;display:block}
+/* свой блок сайта (sites/_art.mjs → sig): карточки с векторной картинкой; цвета берутся из темы */
+.sg-g{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sg-g.three{grid-template-columns:repeat(3,1fr)}
+.sg-g.one{grid-template-columns:1fr}
+.sg-c{margin:0;background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--r);padding:24px}
+.sg-c.on{background:var(--soft);border-color:var(--accent-soft)}
+.sg-c svg{display:block;width:100%;height:auto;margin-bottom:16px}
+.sg-c figcaption{color:var(--mute)}
+.sg-c figcaption b{display:block;font:var(--dw) 22px/1.2 var(--display);letter-spacing:var(--dtrack);text-transform:var(--dcase);color:var(--ink);margin-bottom:4px}
+.sg-cta{margin-top:22px;text-align:center}
+@media(max-width:800px){.sg-g,.sg-g.three{grid-template-columns:1fr}.sg-c{padding:18px}}
+.a-acc{fill:var(--accent)}.a-ink{fill:var(--ink)}.a-soft{fill:var(--accent-soft)}.a-live{fill:var(--live)}.a-surf{fill:var(--surface)}
+.a-mute{fill:var(--line)}.a-line{fill:var(--line)}.a-glass{fill:var(--soft)}.a-bg{fill:var(--soft)}
+.a-ring{stroke:var(--mute);stroke-width:6}.a-hand{fill:none;stroke:var(--ink);stroke-width:6;stroke-linecap:round}
+.a-tick{fill:none;stroke:var(--ink);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.a-arrow{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.a-tickw{fill:none;stroke:var(--on-accent);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.a-t{font:700 20px var(--display);fill:var(--ink)}.a-ts{font:600 15px var(--text);fill:var(--mute)}.a-tw{font:700 18px var(--display);fill:var(--on-accent)}
 .contact{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.city{position:relative;margin-bottom:16px;border-radius:var(--r);overflow:hidden;aspect-ratio:21/8}
+.city figcaption{position:absolute;left:16px;bottom:14px;background:var(--surface);color:var(--ink);font-size:14px;padding:6px 14px;border-radius:var(--rb)}
+@media(max-width:700px){.city{aspect-ratio:16/10}}
 .card{border-radius:var(--r);padding:34px;background:var(--soft)}
 .card.dark{background:var(--dark);color:var(--on-dark)}
 .card.dark p{opacity:.78}
@@ -196,7 +223,10 @@ main section,main .board{margin-bottom:84px}
 .card .txt{color:var(--mute);margin-bottom:22px}
 .card .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
 .card .links a{text-decoration:underline;text-underline-offset:4px}
-@media(max-width:700px){.contact{grid-template-columns:1fr}.card{padding:26px}}
+@media(max-width:700px){.contact{grid-template-columns:minmax(0,1fr)}.card{padding:26px}.card .big{font-size:clamp(19px,6vw,30px)}}
+/* номер не переносится по дефису; карточка не шире колонки даже при широком шрифте (Detailing №1, 17.11.2026) */
+.contact > *{min-width:0}
+.card .big{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* подвал */
 footer{padding:12px 0 40px;color:var(--mute);font-size:14px}
@@ -312,6 +342,7 @@ footer .legal a{display:inline-block;padding:12px 4px;margin:-12px -4px}
 
 /* цифры из карточки 2ГИС под заголовком */
 .facts{display:flex;gap:28px;flex-wrap:wrap;list-style:none;padding:0;margin:0 0 30px}
+@media(max-width:440px){.facts{gap:18px;flex-wrap:nowrap;margin-bottom:22px}.facts li{min-width:0}}
 .facts li{font-size:14px;color:var(--mute)}
 .facts b{display:block;font:var(--dw) 36px/1 var(--display);letter-spacing:var(--dtrack);color:var(--ink);margin-bottom:4px}
 .hero.v-full .facts li{color:inherit;opacity:.85}
@@ -323,6 +354,7 @@ footer .legal a{display:inline-block;padding:12px 4px;margin:-12px -4px}
 .logo i{background:var(--ink);color:var(--accent);font:600 15px var(--display);border-radius:8px}
 header{border-bottom:3px solid var(--ink)}
 h1{font-size:clamp(32px,4.5vw,54px);line-height:1.1;text-wrap:balance}
+@media(max-width:440px){h1{font-size:30px}.plate{margin-bottom:14px}.pl-num{font-size:26px;padding:4px 12px}.pl-reg b{font-size:22px}.facts b{font-size:20px}.hero .lead{font-size:17px;margin:14px 0 20px}}
 h2{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.03em}
 .plate{display:inline-flex;align-items:stretch;background:#fff;border:3px solid var(--ink);border-radius:10px;margin-bottom:22px;font-family:Arial,sans-serif;color:var(--ink);overflow:hidden}
 .pl-num{padding:6px 16px;font:700 34px/1.2 Arial,sans-serif;letter-spacing:.12em}
@@ -357,7 +389,7 @@ h2{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.03em}
 </head>
 <body data-plans="list" data-bstyle="rows">
 <a class="skip" href="#tablo">Перейти к записи</a>
-<div class="demo" role="note">Это пример сайта для «Автомойка 75», а не официальный сайт заведения. Пользуйтесь тестовыми данными.</div>
+<div class="demo" role="note">Это пример, а не официальный сайт «Автомойка 75»<span class="demo-x">. Пользуйтесь тестовыми данными</span>.</div>
 
 <header>
   <div class="wrap nav">
@@ -371,12 +403,12 @@ h2{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.03em}
 </header>
 
 <main class="wrap">
-  <div class="hero v-split"><div class="in"><div class="plate" aria-hidden="true"><span class="pl-num">А075АА</span><span class="pl-reg"><b>75</b><small><svg viewBox="0 0 18 12" width="18" height="12"><rect width="18" height="4" fill="#fff"/><rect y="4" width="18" height="4" fill="#1c57a5"/><rect y="8" width="18" height="4" fill="#d52b1e"/></svg>RUS</small></span></div><h1>Мойка на&nbsp;Бабушкина</h1><p class="lead">Автомойка 75 на Бабушкина, 123а/2. Ежедневно с 10 до 21, перерыв с 12 до 13. Выберите час и запишитесь без звонка.</p><ul class="facts"><li><b>4,9</b>рейтинг в 2ГИС</li><li><b>187</b>оценок</li><li><b>10–21</b>перерыв 12–13</li></ul><div class="cta"><a class="btn" href="#tablo">Выбрать время</a><a class="btn soft" href="#ceny">Услуги</a></div></div><div class="pic"><img src="img/aerial.jpg" width="1600" height="1000" alt="Центр Читы с высоты" fetchpriority="high"></div></div>
+  <div class="hero v-split"><div class="in"><div class="plate" aria-hidden="true"><span class="pl-num">А075АА</span><span class="pl-reg"><b>75</b><small><svg viewBox="0 0 18 12" width="18" height="12"><rect width="18" height="4" fill="#fff"/><rect y="4" width="18" height="4" fill="#1c57a5"/><rect y="8" width="18" height="4" fill="#d52b1e"/></svg>RUS</small></span></div><h1>Мойка на&nbsp;Бабушкина</h1><p class="lead">Запись без звонка: выберите свободный час на табло, и бокс будет ждать вас. Ежедневно с 10 до 21, перерыв с 12 до 13.</p><ul class="facts"><li><b>4,9</b>рейтинг в 2ГИС</li><li><b>187</b>оценок</li><li><b>10–21</b>перерыв 12–13</li></ul><div class="cta"><a class="btn" href="#tablo">Выбрать время</a><a class="btn soft" href="#ceny">Услуги</a></div></div><div class="pic art"><svg viewBox="0 0 400 300" role="img" aria-label="Чистая машина спереди с номером А075АА 75"><rect class="a-bg" width="400" height="300"/><rect class="a-acc" x="0" y="232" width="400" height="68"/><rect class="a-line" x="0" y="228" width="400" height="9" rx="4.5"/><g transform="translate(68 52) scale(2.2)"><path class="a-acc" d="M20 30 32 6h56l12 24z"/><path class="a-glass" d="M34 26l8-15h36l8 15z"/><rect class="a-acc" x="6" y="28" width="108" height="34" rx="14"/><circle class="a-surf" cx="26" cy="44" r="7"/><circle class="a-surf" cx="94" cy="44" r="7"/><rect class="a-ink" x="44" y="40" width="32" height="10" rx="5"/><rect class="a-ink" x="14" y="60" width="18" height="16" rx="5"/><rect class="a-ink" x="88" y="60" width="18" height="16" rx="5"/></g><rect x="152" y="178" width="96" height="26" rx="5" fill="#fff" stroke="#101010" stroke-width="3"/><text x="192" y="198" text-anchor="middle" style="font:700 16px Arial,sans-serif;letter-spacing:.08em;fill:#101010">А075АА</text><text x="236" y="198" text-anchor="middle" style="font:700 14px Arial,sans-serif;fill:#101010">75</text><rect x="224" y="178" width="3" height="26" fill="#101010"/><path class="a-surf" transform="translate(40 40) scale(1.4)" d="M10 0C10 0 0 12 0 19a10 10 0 0 0 20 0C20 12 10 0 10 0z"/><path class="a-surf" transform="translate(80 92) scale(1)" d="M10 0C10 0 0 12 0 19a10 10 0 0 0 20 0C20 12 10 0 10 0z"/><path class="a-surf" transform="translate(330 50) scale(1.6)" d="M10 0C10 0 0 12 0 19a10 10 0 0 0 20 0C20 12 10 0 10 0z"/><path class="a-surf" transform="translate(352 120) scale(1)" d="M10 0C10 0 0 12 0 19a10 10 0 0 0 20 0C20 12 10 0 10 0z"/><path class="a-ink" transform="translate(300 24) scale(0.9)" d="M10 0C10 0 0 12 0 19a10 10 0 0 0 20 0C20 12 10 0 10 0z"/></svg></div></div>
   <div class="board" id="tablo" data-board role="region" aria-labelledby="h-tablo"><div class="board-top"><h2 id="h-tablo"><span class="live" aria-hidden="true"></span>Свободное время</h2><div class="tabs" id="days-tabs" aria-label="День"></div></div><div class="hours" id="rows" aria-live="polite"><span class="hour wait">Загружаем…</span></div><noscript><p class="note">Расписание видно с включённым JavaScript. Записаться можно по телефону +7 (914) 351-50-05.</p></noscript><p class="note" id="board-note">Перерыв с 12:00 до 13:00. Нажмите на свободный час, чтобы записаться.</p></div>
   <section id="ceny" aria-labelledby="h-ceny"><div class="head"><h2 id="h-ceny">Услуги</h2><p>Цены нам пока не переданы: администратор назовёт стоимость при подтверждении.</p></div><div class="chips" id="chips" aria-label="Класс автомобиля"></div><div class="plans" id="plans"></div></section>
-  <section aria-labelledby="h-how"><div class="head"><h2 id="h-how">Как записаться</h2></div><div class="steps"><div class="step"><i aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><h3>Час</h3><p>Свободное время видно на табло.</p></div><div class="step"><i aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v2H3z"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg></i><h3>Класс авто</h3><p>Укажите, на чём приедете.</p></div><div class="step"><i aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 6a2 2 0 0 1 2-3z"/></svg></i><h3>Звонок</h3><p>Перезвоним и подтвердим запись.</p></div></div></section>
-  <section aria-label="Чита"><div class="strip"><figure><img src="img/stele.jpg" width="1600" height="1000" alt="Стела «Город трудовой доблести» и здание на площади в Чите" loading="lazy"></figure><figure><img src="img/lenin.jpg" width="1600" height="1000" alt="Ночная площадь с фонтаном в Чите" loading="lazy"></figure></div></section>
-  <section id="kontakty" aria-labelledby="h-kont"><div class="contact"><div class="card dark"><h2 id="h-kont">Бабушкина, 123а/2</h2><p><a id="c-addr" href="#" target="_blank" rel="noopener">ул. Бабушкина, 123а/2, Чита</a></p><a class="big" id="c-tel" href="#"></a><p id="c-hrs"></p><div class="links" id="c-links"></div></div><div class="card"><h2>Запись онлайн</h2><p class="txt">Выберите час на мойку или оставьте заявку на кузовной ремонт.</p><button class="btn" type="button" data-book>Записаться</button></div></div></section>
+  <section class="sg" aria-labelledby="h-obed"><div class="head"><h2 id="h-obed">Перерыв 12–13 уже учтён</h2><p>Табло показывает только те часы, когда бокс принимает машины. К закрытому боксу в обед никто не приедет.</p></div><div class="sg-g one"><figure class="sg-c on"><svg viewBox="0 0 420 180" role="img" aria-label="Часы с 10 до 16: перерыв с 12 до 13 закрыт, машина записана на 13:00"><rect class="a-surf" x="6" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="31" y="128" text-anchor="middle" style="">10</text><rect class="a-surf" x="64" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="89" y="128" text-anchor="middle" style="">11</text><rect class="a-line" x="122" y="96" width="50" height="50" rx="10" /><text class="a-t" x="147" y="128" text-anchor="middle" style="fill:#fff">12</text><rect class="a-acc" x="180" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="205" y="128" text-anchor="middle" style="">13</text><rect class="a-surf" x="238" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="263" y="128" text-anchor="middle" style="">14</text><rect class="a-surf" x="296" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="321" y="128" text-anchor="middle" style="">15</text><rect class="a-surf" x="354" y="96" width="50" height="50" rx="10" stroke="#101010" stroke-width="3"/><text class="a-t" x="379" y="128" text-anchor="middle" style="">16</text><text class="a-ts" x="151" y="170" text-anchor="middle">обед</text><g transform="translate(170 22) scale(1)"><rect class="a-acc" x="0" y="16" width="96" height="22" rx="10"/><path class="a-acc" d="M18 18 30 3h36l14 15z"/><path class="a-glass" d="M32 15 39 7h12v8zM56 7h8l8 8H56z"/><circle class="a-ink" cx="24" cy="40" r="10"/><circle class="a-surf" cx="24" cy="40" r="4"/><circle class="a-ink" cx="72" cy="40" r="10"/><circle class="a-surf" cx="72" cy="40" r="4"/></g><path class="a-arrow" style="stroke:#101010" d="M213 78v12"/></svg><figcaption><b>Обед закрыт, 13:00 свободно</b>Клиент видит, что с 12 до 13 записи нет, и сразу выбирает ближайший свободный час.</figcaption></figure></div><p class="sg-cta"><a class="btn" href="#tablo">Выбрать свободный час</a></p></section>
+  <section aria-label="Чита"><div class="strip"><figure><img src="img/purple.jpg" width="1600" height="1000" alt="Машина в пене на мойке" loading="lazy"></figure><figure><img src="img/towel.jpg" width="1600" height="1000" alt="Кузов протирают мягкой микрофиброй" loading="lazy"></figure></div></section>
+  <section id="kontakty" aria-labelledby="h-kont"><figure class="city"><img src="img/aerial.jpg" width="1600" height="1000" alt="Чита с высоты" loading="lazy"><figcaption>Работаем в Чите</figcaption></figure><div class="contact"><div class="card dark"><h2 id="h-kont">Бабушкина, 123а/2</h2><p><a id="c-addr" href="#" target="_blank" rel="noopener">ул. Бабушкина, 123а/2, Чита</a></p><a class="big" id="c-tel" href="#"></a><p id="c-hrs"></p><div class="links" id="c-links"></div></div><div class="card"><h2>Запись онлайн</h2><p class="txt">Выберите час на мойку или оставьте заявку на кузовной ремонт.</p><button class="btn" type="button" data-book>Записаться</button></div></div></section>
 </main>
 
 <footer>
@@ -390,7 +422,7 @@ h2{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.03em}
     </div>
     <div class="legal">
       <p>© <span id="fbrand">Автомойка 75</span>, 2026. Тестовая версия: пример сайта, не официальный сайт заведения. Рейтинг и отзывы — по данным карточки 2ГИС на 17.11.2026.</p>
-      <p>Фото: Artem Svetlov from Moscow, Russia, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>; Vyacheslav Bukharov, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>; LxAndrew, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>; Wikimedia Commons (Чита).</p>
+      <p>Фото: Triplec85 (кадрировано), <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>; Info2408, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>; Artem Svetlov from Moscow, Russia, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>; Wikimedia Commons.</p>
     </div>
   </div>
 </footer>
